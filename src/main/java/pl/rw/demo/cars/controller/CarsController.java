@@ -13,7 +13,11 @@ import java.util.List;
 @RequestMapping("/demo")
 public class CarsController {
 
-    private CarsService carsService = new CarsService();
+    private final CarsService carsService;
+
+    public CarsController(CarsService carsService) {
+        this.carsService = carsService;
+    }
 
     // curl -d '{"manufacturer":"Toyota","color":"Silver","engineType":"Petrol"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
     // curl -d '{"manufacturer":"Ford","color":"Black","engineType":"Diesel"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
