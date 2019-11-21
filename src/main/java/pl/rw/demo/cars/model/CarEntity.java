@@ -29,4 +29,12 @@ public class CarEntity {
 
     protected CarEntity() {
     }
+
+    public CarDto toCarDto() {
+        return new CarDto(
+                this.getId(),
+                this.getManufacturer(),
+                this.getColor(),
+                this.getEngineType());
+    }
 }

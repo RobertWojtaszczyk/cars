@@ -20,23 +20,14 @@ public class CarsService {
 
     public List<CarDto> getCars() {
         return List.ofAll(this.carsRepository.findAll())
-                .map(getCarEntityCarDtoFunction()
+                .map(CarEntity::toCarDto
                 );
     }
 
-    private Function<CarEntity, CarDto> getCarEntityCarDtoFunction() {
-        return carEntity -> new CarDto(
-                carEntity.getId(),
-                carEntity.getManufacturer(),
-                carEntity.getColor(),
-                carEntity.getEngineType());
-    }
-
     public CarDto addCar(final NewCar newCar) {
-        CarEntity carEntity = carsRepository.save(new CarEntity(
+        return carsRepository.save(new CarEntity(
                 newCar.manufacturer,
                 newCar.color,
-                newCar.engineType));
-        return getCarEntityCarDtoFunction().apply(carEntity);
+                newCar.engineType)).toCarDto();
     }
 }
