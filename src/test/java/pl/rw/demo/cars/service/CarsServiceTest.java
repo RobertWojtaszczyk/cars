@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pl.rw.demo.cars.model.Car;
 import pl.rw.demo.cars.model.NewCar;
 import pl.rw.demo.cars.repository.CarsRepository;
+import pl.rw.demo.cars.repository.OilServiceRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +17,8 @@ class CarsServiceTest {
 
     @Autowired
     private CarsRepository carsRepository;
+    @Autowired
+    private OilServiceRepository oilServiceRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -24,14 +27,14 @@ class CarsServiceTest {
 
     @Test
     public void getEmptyList() {
-        CarsService carsService = new CarsService(carsRepository);
+        CarsService carsService = new CarsService(carsRepository, oilServiceRepository);
         List<Car> cars = carsService.getCars();
         assertTrue(cars.isEmpty());
     }
 
     @Test
     public void addCar() {
-        CarsService carsService = new CarsService(carsRepository);
+        CarsService carsService = new CarsService(carsRepository, oilServiceRepository);
         Car car = carsService.addCar(new NewCar("Toyota", "Silver", "Petrol"));
         assertNotNull(car);
         assertEquals("Toyota", car.manufacturer);
@@ -39,7 +42,7 @@ class CarsServiceTest {
 
     @Test
     public void addedCarHasNewId() {
-        CarsService carsService = new CarsService(carsRepository);
+        CarsService carsService = new CarsService(carsRepository, oilServiceRepository);
         Car car1 = carsService.addCar(new NewCar("Toyota", "Silver", "Petrol"));
         Car car2 = carsService.addCar(new NewCar("Ford", "Silver", "Petrol"));
         assertNotEquals(car1.id, car2.id);

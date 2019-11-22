@@ -10,6 +10,15 @@ import javax.persistence.*;
 @Setter
 public class OilServiceEntity {
 
+    public OilServiceEntity(Long mileage, String comment, CarEntity car) {
+        this.mileage = mileage;
+        this.comment = comment;
+        this.car = car;
+    }
+
+    protected OilServiceEntity() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
