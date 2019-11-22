@@ -22,6 +22,7 @@ public class CarsController {
     // curl -d '{"manufacturer":"Toyota","color":"Silver","engineType":"Petrol"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
     // curl -d '{"manufacturer":"Ford","color":"Black","engineType":"Diesel"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
     // curl -d '{"manufacturer":"Opel","color":"Vectra","engineType":"Petrol"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
+    // curl -X POST http://localhost:8080/demo/cars/1/color/Red
 
     @GetMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Car> getCars() {
@@ -31,5 +32,11 @@ public class CarsController {
     @PostMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Car addCar(@RequestBody NewCar car) {
         return this.carsService.addCar(car);
+    }
+
+    @PostMapping(path = "/cars/{id}/color/{color}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Car setColor(@PathVariable("id") final Long id, @PathVariable("color") final String color) {
+        return this.carsService.changeColor(id, color)
+                .orElseThrow(() -> new IllegalArgumentException("Car id: " + id + " does not exist!"));
     }
 }
