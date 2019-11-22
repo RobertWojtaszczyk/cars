@@ -1,7 +1,6 @@
 package pl.rw.demo.cars.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -30,8 +29,8 @@ public class CarEntity {
     protected CarEntity() {
     }
 
-    public CarDto toCarDto() {
-        return new CarDto(
+    public Car toCar() {
+        return new Car(
                 this.getId(),
                 this.getManufacturer(),
                 this.getColor(),

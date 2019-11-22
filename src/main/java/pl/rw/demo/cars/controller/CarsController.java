@@ -3,7 +3,7 @@ package pl.rw.demo.cars.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import pl.rw.demo.cars.model.CarDto;
+import pl.rw.demo.cars.model.Car;
 import pl.rw.demo.cars.model.NewCar;
 import pl.rw.demo.cars.service.CarsService;
 
@@ -24,12 +24,12 @@ public class CarsController {
     // curl -d '{"manufacturer":"Opel","color":"Vectra","engineType":"Petrol"}' -H "Content-Type:application/json" http://localhost:8080/demo/cars
 
     @GetMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CarDto> getCars() {
+    public List<Car> getCars() {
         return this.carsService.getCars().asJava();
     }
 
     @PostMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CarDto addCar(@RequestBody NewCar car) {
+    public Car addCar(@RequestBody NewCar car) {
         return this.carsService.addCar(car);
     }
 }

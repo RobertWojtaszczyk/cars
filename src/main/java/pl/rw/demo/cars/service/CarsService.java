@@ -2,12 +2,10 @@ package pl.rw.demo.cars.service;
 
 import io.vavr.collection.List;
 import org.springframework.stereotype.Service;
-import pl.rw.demo.cars.model.CarDto;
+import pl.rw.demo.cars.model.Car;
 import pl.rw.demo.cars.model.CarEntity;
 import pl.rw.demo.cars.model.NewCar;
 import pl.rw.demo.cars.repository.CarsRepository;
-
-import java.util.function.Function;
 
 @Service
 public class CarsService {
@@ -18,16 +16,15 @@ public class CarsService {
         this.carsRepository = carsRepository;
     }
 
-    public List<CarDto> getCars() {
+    public List<Car> getCars() {
         return List.ofAll(this.carsRepository.findAll())
-                .map(CarEntity::toCarDto
-                );
+                .map(CarEntity::toCar);
     }
 
-    public CarDto addCar(final NewCar newCar) {
+    public Car addCar(final NewCar newCar) {
         return carsRepository.save(new CarEntity(
                 newCar.manufacturer,
                 newCar.color,
-                newCar.engineType)).toCarDto();
+                newCar.engineType)).toCar();
     }
 }
