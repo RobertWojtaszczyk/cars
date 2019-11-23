@@ -45,7 +45,7 @@ public class CarsService {
                 oilService.mileage,
                 oilService.comment,
                 carEntity));
-        return List.ofAll(carEntity.getOilServices()).size();
+        return List.ofAll(carEntity.getOilServices()).size() + 1;
         });
     }
 }
