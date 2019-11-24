@@ -1,21 +1,20 @@
 package pl.rw.demo.cars.service;
 
 import io.vavr.collection.List;
+import io.vavr.control.Option;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.rw.demo.cars.model.*;
-import pl.rw.demo.cars.repository.CarsRepository;
 import pl.rw.demo.cars.repository.OilServiceRepository;
-
-import java.util.Optional;
+import pl.rw.demo.cars.repository.VavrCarsRepository;
 
 @Service
 public class CarsService {
 
-    private final CarsRepository carsRepository;
+    private final VavrCarsRepository carsRepository;
     private final OilServiceRepository oilServiceRepository;
 
-    public CarsService(CarsRepository carsRepository, OilServiceRepository oilServiceRepository) {
+    public CarsService(VavrCarsRepository carsRepository, OilServiceRepository oilServiceRepository) {
         this.carsRepository = carsRepository;
         this.oilServiceRepository = oilServiceRepository;
     }
@@ -33,14 +32,16 @@ public class CarsService {
     }
 
     @Transactional
-    public Optional<Car> changeColor(final Long carId, final String color) {
-        final Optional<CarEntity> car = this.carsRepository.findById(carId);
+    public Option<Car> changeColor(final Long carId, final String color) {
+        // final Optional<CarEntity> car = this.carsRepository.findById(carId);
+        final Option<CarEntity> car = this.carsRepository.findById(carId);
         return car.map(carEntity -> {carEntity.setColor(color); return carEntity.toCar();});
     }
 
     @Transactional
-    public Optional<Integer> addOilService(final Long carId, final OilService oilService) {
-        final Optional<CarEntity> car = this.carsRepository.findById(carId);
+    public Option<Integer> addOilService(final Long carId, final OilService oilService) {
+        // final Optional<CarEntity> car = this.carsRepository.findById(carId);
+        final Option<CarEntity> car = this.carsRepository.findById(carId);
         return car.map(carEntity -> {this.oilServiceRepository.save(new OilServiceEntity(
                 oilService.mileage,
                 oilService.comment,
